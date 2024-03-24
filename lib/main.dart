@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:blog_app/fake_data/data.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -60,15 +59,15 @@ class MyHomePage extends StatelessWidget {
                     ),
                     Image.asset(
                       'assets/img/icons/notification.png',
-                      width: 24,
-                      height: 24,
+                      width: 34,
+                      height: 34,
                     )
                   ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
-                child: Text('Explore todays',
+                child: Text('Explore today`s',
                     style: Theme.of(context).textTheme.titleLarge),
               ),
               const SizedBox(
@@ -78,39 +77,16 @@ class MyHomePage extends StatelessWidget {
                 height: 100,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                   scrollDirection: Axis.horizontal,
                   itemCount: storys.length,
                   itemBuilder: (context, index) {
                     final story = storys[index];
                     return Column(
                       children: [
-                        Container(
-                          width: 68,
-                          height: 68,
-                          margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24),
-                              gradient: const LinearGradient(
-                                begin: Alignment.topLeft,
-                                colors: [
-                                  Color(0xff376AED),
-                                  Color(0xff49B0E2),
-                                  Color(0xff9CECFB)
-                                ],
-                              )),
-                          child: Padding(
-                            padding: const EdgeInsets.all(3),
-                            child: Container(
-                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(16),
-                                  child: Image.asset('assets/img/stories/${story.imageFileName}')),
-                              ),
-                            ),
-                          ),
-                        ),
+                        story.isViewed
+                            ? _storyImageViewed(story)
+                            : _storyImageNormal(story),
                         const SizedBox(
                           height: 10,
                         ),
@@ -125,6 +101,64 @@ class MyHomePage extends StatelessWidget {
               )
             ]),
           )),
+    );
+  }
+
+  Widget _storyImageNormal(StoryData story) {
+    return Container(
+      width: 68,
+      height: 68,
+      margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            colors: [Color(0xff376AED), Color(0xff49B0E2), Color(0xff9CECFB)],
+          )),
+      child: Padding(
+        padding: const EdgeInsets.all(3),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child:
+                    Image.asset('assets/img/stories/${story.imageFileName}')),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _storyImageViewed(StoryData story) {
+    return Container(
+      width: 68,
+      height: 68,
+      margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(3),
+        child: DottedBorder(
+          borderType: BorderType.RRect,
+          dashPattern: [8, 3],
+          radius: const Radius.circular(20),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(20)),
+            child: Padding(
+              padding: const EdgeInsets.all(3),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child:
+                      Image.asset('assets/img/stories/${story.imageFileName}')),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
