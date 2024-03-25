@@ -13,12 +13,12 @@ class StoryData {
       required this.isViewed});
 }
 
-class Category {
+class Categories {
   final int id;
   final String title;
   final String imageFileName;
 
-  Category(
+  Categories(
       {required this.id, required this.title, required this.imageFileName});
 }
 
@@ -95,22 +95,22 @@ class AppDatabase {
     ];
   }
 
-  static List<Category> get categories {
+  static List<Categories> get categories {
     return [
-      Category(
+      Categories(
         id: 101,
         title: 'Technology',
         imageFileName: 'large_post_1.jpg',
       ),
-      Category(id: 102, title: 'Cinema', imageFileName: 'large_post_2.jpg'),
-      Category(
+      Categories(id: 102, title: 'Cinema', imageFileName: 'large_post_2.jpg'),
+      Categories(
           id: 103, title: 'Transportation', imageFileName: 'large_post_3.jpg'),
-      Category(id: 104, title: 'Adventure', imageFileName: 'large_post_4.jpg'),
-      Category(
+      Categories(id: 104, title: 'Adventure', imageFileName: 'large_post_4.jpg'),
+      Categories(
           id: 105,
           title: 'Artificial Intelligence',
           imageFileName: 'large_post_5.jpg'),
-      Category(id: 106, title: 'Economy', imageFileName: 'large_post_6.jpg'),
+      Categories(id: 106, title: 'Economy', imageFileName: 'large_post_6.jpg'),
     ];
   }
 
