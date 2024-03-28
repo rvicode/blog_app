@@ -1,8 +1,11 @@
+import 'dart:ffi';
+
 import 'package:blog_app/carousel/carousel_slider.dart';
 import 'package:blog_app/fake_data/data.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +30,11 @@ class MyApp extends StatelessWidget {
                 fontFamily: defaultfontfamily,
                 color: primaryTextColor,
                 fontWeight: FontWeight.bold),
+            bodySmall: TextStyle(
+                fontFamily: defaultfontfamily,
+                fontSize: 14,
+                color: Color(0xff376AED),
+                fontWeight: FontWeight.w700),
             bodyMedium: TextStyle(
                 fontFamily: defaultfontfamily,
                 color: secoundaryTextColor,
@@ -44,6 +52,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.white,
@@ -57,7 +66,7 @@ class MyHomePage extends StatelessWidget {
                   children: [
                     Text(
                       'Hi, Arvin!',
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: textTheme.titleMedium,
                     ),
                     Image.asset(
                       'assets/img/icons/notification.png',
@@ -69,8 +78,7 @@ class MyHomePage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
-                child: Text('Explore today`s',
-                    style: Theme.of(context).textTheme.titleLarge),
+                child: Text('Explore today`s', style: textTheme.titleLarge),
               ),
               const SizedBox(
                 height: 15,
@@ -94,7 +102,7 @@ class MyHomePage extends StatelessWidget {
                         ),
                         Text(
                           story.name,
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: textTheme.bodyMedium,
                         ),
                       ],
                     );
@@ -104,7 +112,38 @@ class MyHomePage extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const _CategoryList()
+              const _CategoryList(),
+              SizedBox(
+                height: 500,
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 24, left: 32),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Laset News',
+                            style: textTheme.titleLarge,
+                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'More',
+                                style: textTheme.titleMedium!.apply(
+                                    color: Color(0xff376AED),
+                                    fontSizeFactor: 0.9),
+                              ))
+                        ],
+                      ),
+                    ),
+                    _Posts(
+                      textTheme: textTheme,
+                    )
+                  ],
+                ),
+              )
             ]),
           )),
     );
@@ -164,6 +203,134 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _Posts extends StatelessWidget {
+  final TextTheme textTheme;
+  const _Posts({super.key, required this.textTheme});
+
+  @override
+  Widget build(BuildContext context) {
+    final post = AppDatabase.posts;
+
+    return SizedBox(
+      height: 450,
+      width: double.infinity,
+      child: ListView.builder(
+        physics: const ClampingScrollPhysics(),
+        itemExtent: 141,
+        itemCount: post.length,
+        itemBuilder: (context, index) {
+          return _PostItem(
+            post: post[index],
+            textTheme: textTheme,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _PostItem extends StatelessWidget {
+  final PostData post;
+  final TextTheme textTheme;
+  const _PostItem({
+    super.key,
+    required this.post,
+    required this.textTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.white,
+          boxShadow: const [
+            BoxShadow(blurRadius: 20, color: Color(0x1a5282FF)),
+          ]),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              bottomLeft: Radius.circular(16),
+            ),
+            child: Image.asset('assets/img/posts/small/${post.imageFileName}'),
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  post.caption,
+                  style: textTheme.bodySmall,
+                ),
+                Text(
+                  post.title,
+                  style: textTheme.bodyMedium,
+                ),
+                const SizedBox(
+                  height: 9,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      CupertinoIcons.hand_thumbsup,
+                      size: 16,
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      post.likes,
+                      style: textTheme.bodyMedium!.apply(fontSizeFactor: 0.8),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    const Icon(
+                      CupertinoIcons.clock,
+                      size: 16,
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      post.time,
+                      style: textTheme.bodyMedium!.apply(fontSizeFactor: 0.8),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: 
+                        post.isBookmarked?
+                        Icon(
+                          CupertinoIcons.bookmark_fill,
+                          size: 16,
+                        ):
+                        Icon(
+                          CupertinoIcons.bookmark,
+                          size: 16,
+                        )
+                      ),
+                    ),
+                    const SizedBox(width: 15,)
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
