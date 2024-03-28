@@ -1,11 +1,8 @@
-import 'dart:ffi';
-
 import 'package:blog_app/carousel/carousel_slider.dart';
 import 'package:blog_app/fake_data/data.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,7 +38,113 @@ class MyApp extends StatelessWidget {
                 fontSize: 14)),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: Stack(
+        children: [
+          Positioned.fill(child: MyHomePage()),
+          const Positioned(
+              right: 0, left: 0, bottom: 0, child: _BottomNavigation()),
+        ],
+      ),
+    );
+  }
+}
+
+class _BottomNavigation extends StatelessWidget {
+  const _BottomNavigation({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 110,
+      child: Stack(
+        children: [
+          Positioned(
+            right: 0,
+            left: 0,
+            bottom: 0,
+            child: Container(
+              height: 65,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 20,
+                        color: const Color(0xff9b8487).withOpacity(0.4))
+                  ],
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(16),
+                      topLeft: Radius.circular(16))),
+              child: const Padding(
+                padding: EdgeInsets.only(top: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _BottomNavigationItem(
+                      iconFileName: 'Home.png',
+                      activeiconFileName: 'Home.png',
+                      title: 'Home',
+                    ),
+                    _BottomNavigationItem(
+                      iconFileName: 'Articles.png',
+                      activeiconFileName: 'Articles.png',
+                      title: 'Articles',
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    _BottomNavigationItem(
+                      iconFileName: 'Search.png',
+                      activeiconFileName: 'Search.png',
+                      title: 'Search',
+                    ),
+                    _BottomNavigationItem(
+                      iconFileName: 'Menu.png',
+                      activeiconFileName: 'Menu.png',
+                      title: 'Menu',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              height: 65,
+              width: 65,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(32.5),
+                  border: Border.all(color: Colors.white, width: 4),
+                  color: const Color(0xff376AED)),
+              child: Image.asset('assets/img/icons/plus.png'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BottomNavigationItem extends StatelessWidget {
+  final String iconFileName;
+  final String activeiconFileName;
+  final String title;
+  const _BottomNavigationItem({
+    super.key,
+    required this.iconFileName,
+    required this.activeiconFileName,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Column(
+      children: [
+        Image.asset(
+          'assets/img/icons/$iconFileName',
+        ),
+        Text(title, style: textTheme.bodySmall!.apply(color: Colors.grey))
+      ],
     );
   }
 }
@@ -132,7 +235,7 @@ class MyHomePage extends StatelessWidget {
                               child: Text(
                                 'More',
                                 style: textTheme.titleMedium!.apply(
-                                    color: Color(0xff376AED),
+                                    color: const Color(0xff376AED),
                                     fontSizeFactor: 0.9),
                               ))
                         ],
@@ -311,20 +414,20 @@ class _PostItem extends StatelessWidget {
                     ),
                     Expanded(
                       child: Container(
-                        alignment: Alignment.centerRight,
-                        child: 
-                        post.isBookmarked?
-                        Icon(
-                          CupertinoIcons.bookmark_fill,
-                          size: 16,
-                        ):
-                        Icon(
-                          CupertinoIcons.bookmark,
-                          size: 16,
-                        )
-                      ),
+                          alignment: Alignment.centerRight,
+                          child: post.isBookmarked
+                              ? const Icon(
+                                  CupertinoIcons.bookmark_fill,
+                                  size: 16,
+                                )
+                              : const Icon(
+                                  CupertinoIcons.bookmark,
+                                  size: 16,
+                                )),
                     ),
-                    const SizedBox(width: 15,)
+                    const SizedBox(
+                      width: 15,
+                    )
                   ],
                 ),
               ],
