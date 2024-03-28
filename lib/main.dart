@@ -3,8 +3,16 @@ import 'package:blog_app/fake_data/data.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.white,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.white,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
+
   runApp(const MyApp());
 }
 
@@ -50,7 +58,7 @@ class MyApp extends StatelessWidget {
 }
 
 class _BottomNavigation extends StatelessWidget {
-  const _BottomNavigation({super.key});
+  const _BottomNavigation();
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +137,6 @@ class _BottomNavigationItem extends StatelessWidget {
   final String activeiconFileName;
   final String title;
   const _BottomNavigationItem({
-    super.key,
     required this.iconFileName,
     required this.activeiconFileName,
     required this.title,
@@ -313,7 +320,7 @@ class MyHomePage extends StatelessWidget {
 
 class _Posts extends StatelessWidget {
   final TextTheme textTheme;
-  const _Posts({super.key, required this.textTheme});
+  const _Posts({required this.textTheme});
 
   @override
   Widget build(BuildContext context) {
@@ -341,7 +348,6 @@ class _PostItem extends StatelessWidget {
   final PostData post;
   final TextTheme textTheme;
   const _PostItem({
-    super.key,
     required this.post,
     required this.textTheme,
   });
