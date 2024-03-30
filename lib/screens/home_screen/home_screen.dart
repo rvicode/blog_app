@@ -1,4 +1,5 @@
 import 'package:blog_app/fake_data/data.dart';
+import 'package:blog_app/gen/assets.gen.dart';
 import 'package:blog_app/screens/home_screen/widgets/category_widget.dart';
 import 'package:blog_app/screens/home_screen/widgets/post_widget.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -27,11 +28,7 @@ class MyHomePage extends StatelessWidget {
                       'Hi, Arvin!',
                       style: textTheme.titleMedium,
                     ),
-                    Image.asset(
-                      'assets/img/icons/notification.png',
-                      width: 34,
-                      height: 34,
-                    )
+                      Assets.img.icons.notification.image(width: 34, height: 34),
                   ],
                 ),
               ),

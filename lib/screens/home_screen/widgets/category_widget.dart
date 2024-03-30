@@ -32,7 +32,7 @@ class CategoryItem extends StatelessWidget {
   final Categories category;
   final double left;
   final double right;
-  const CategoryItem({
+  const CategoryItem({super.key, 
     required this.category,
     required this.left,
     required this.right,

@@ -1,7 +1,8 @@
+import 'package:blog_app/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation();
+  const BottomNavigation({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class BottomNavigation extends StatelessWidget {
                   borderRadius: BorderRadius.circular(32.5),
                   border: Border.all(color: Colors.white, width: 4),
                   color: const Color(0xff376AED)),
-              child: Image.asset('assets/img/icons/plus.png'),
+              child: Assets.img.icons.plus.image(),
             ),
           ),
         ],
@@ -79,7 +80,7 @@ class BottomNavigationItem extends StatelessWidget {
   final String iconFileName;
   final String activeiconFileName;
   final String title;
-  const BottomNavigationItem({
+  const BottomNavigationItem({super.key, 
     required this.iconFileName,
     required this.activeiconFileName,
     required this.title,

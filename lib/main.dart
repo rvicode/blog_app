@@ -1,3 +1,4 @@
+import 'package:blog_app/gen/fonts.gen.dart';
 import 'package:blog_app/screens/home_screen/home_screen.dart';
 import 'package:blog_app/widgets/bottom_navigation_widget.dart';
 import 'package:blog_app/widgets/theme_data.dart';
@@ -16,7 +17,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static const String defaultfontfamily = 'Avenir';
+  static const String defaultfontfamily = FontFamily.avenir;
   const MyApp({super.key});
 
   @override
