@@ -13,7 +13,7 @@ Widget storyImageNormal(StoryData story) {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           colors: [Color(0xff376AED), Color(0xff49B0E2), Color(0xff9CECFB)],
-        )),
+        )),     
     child: Padding(
       padding: const EdgeInsets.all(3),
       child: Container(
