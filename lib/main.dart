@@ -25,6 +25,17 @@ class MyApp extends StatelessWidget {
     const secoundaryTextColor = Color(0xff2D4379);
     return MaterialApp(
         theme: ThemeData(
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(const Color(0xff376AED)),
+              minimumSize: MaterialStateProperty.all(const Size(88, 60)),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
           textTheme: TextThemes(
               secoundaryTextColor, primaryTextColor, defaultfontfamily),
           useMaterial3: true,
