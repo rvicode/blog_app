@@ -1,6 +1,5 @@
 import 'package:blog_app/gen/assets.gen.dart';
-import 'package:blog_app/screens/home_screen/home_screen.dart';
-import 'package:blog_app/widgets/bottom_navigation_widget.dart';
+import 'package:blog_app/screens/on_bording_screen/on_bording_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,11 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(const Duration(seconds: 2)).then((value) => {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-        return Stack(
+        return const Stack(
         children: [
-          Positioned.fill(child: MyHomePage()),
-          const Positioned(
-              right: 0, left: 0, bottom: 0, child: BottomNavigation()),
+          Positioned.fill(child: OnBordingScreen()),
         ],
       );
       }))
