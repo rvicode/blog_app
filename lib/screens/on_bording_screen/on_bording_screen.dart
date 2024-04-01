@@ -1,6 +1,6 @@
 import 'package:blog_app/fake_data/data.dart';
 import 'package:blog_app/gen/assets.gen.dart';
-import 'package:blog_app/screens/home_screen/home_screen.dart';
+import 'package:blog_app/screens/auth/auth_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -30,7 +30,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context);
+    final ThemeData themeData = Theme.of(context);
     return SafeArea(
         child: Scaffold(
             backgroundColor: Colors.white,
@@ -66,7 +66,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                               children: [
                                 Text(
                                   items[index].title,
-                                  style: textTheme.textTheme.headlineMedium!
+                                  style: themeData.textTheme.headlineMedium!
                                       .apply(fontSizeFactor: 0.8),
                                 ),
                                 const SizedBox(
@@ -74,7 +74,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                                 ),
                                 Text(
                                   items[index].description,
-                                  style: textTheme.textTheme.bodyMedium,
+                                  style: themeData.textTheme.bodyMedium,
                                 ),
                               ],
                             ),
@@ -93,12 +93,23 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                               effect: ExpandingDotsEffect(
                                 dotWidth: 8,
                                 dotHeight: 8,
-                                activeDotColor: textTheme.colorScheme.primary,
-                                dotColor: textTheme.colorScheme.primary
+                                activeDotColor: themeData.colorScheme.primary,
+                                dotColor: themeData.colorScheme.primary
                                     .withOpacity(0.2),
                               ),
                             ),
                             ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xff376AED)),
+                                  minimumSize: MaterialStateProperty.all(
+                                      const Size(88, 55)),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
                                 onPressed: () {
                                   page != items.length - 1
                                       ? _pageController.animateToPage(page + 1,
@@ -108,7 +119,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                                       : Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  MyHomePage()));
+                                                  const AuthScreen()));
                                 },
                                 child: Icon(
                                   page != items.length - 1
