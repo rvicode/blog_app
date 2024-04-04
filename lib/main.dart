@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     const secoundaryTextColor = Color(0xff2D4379);
     return MaterialApp(
         theme: ThemeData(
-          colorScheme: ColorScheme.light(primary: Color(0xff376AED)),
+          colorScheme: const ColorScheme.light(primary: Color(0xff376AED)),
           textTheme: TextThemes(
               secoundaryTextColor, primaryTextColor, defaultfontfamily),
           useMaterial3: true,

@@ -14,13 +14,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2)).then((value) => {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-        return const Stack(
-        children: [
-          Positioned.fill(child: OnBordingScreen()),
-        ],
-      );
-      }))
+      Navigator.of(context)
+              .pushReplacement(MaterialPageRoute(builder: (context) {
+            return const Stack(
+              children: [
+                Positioned.fill(child: OnBordingScreen()),
+              ],
+            );
+          }))
     });
   }
   @override
