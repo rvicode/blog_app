@@ -67,6 +67,9 @@ class $AssetsImgIconsGen {
   AssetGenImage get twitter =>
       const AssetGenImage('assets/img/icons/Twitter.png');
 
+  /// File path: assets/img/icons/bilakh.svg
+  SvgGenImage get bilakh => const SvgGenImage('assets/img/icons/bilakh.svg');
+
   /// File path: assets/img/icons/category_1.png
   AssetGenImage get category1 =>
       const AssetGenImage('assets/img/icons/category_1.png');
@@ -100,6 +103,7 @@ class $AssetsImgIconsGen {
         menu,
         search,
         twitter,
+        bilakh,
         category1,
         category2,
         category3,
@@ -201,9 +205,20 @@ class $AssetsImgPostsLargeGen {
   AssetGenImage get largePost6 =>
       const AssetGenImage('assets/img/posts/large/large_post_6.jpg');
 
+  /// File path: assets/img/posts/large/single_post.jpg
+  AssetGenImage get singlePost =>
+      const AssetGenImage('assets/img/posts/large/single_post.jpg');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [largePost1, largePost2, largePost3, largePost4, largePost5, largePost6];
+  List<AssetGenImage> get values => [
+        largePost1,
+        largePost2,
+        largePost3,
+        largePost4,
+        largePost5,
+        largePost6,
+        singlePost
+      ];
 }
 
 class $AssetsImgPostsSmallGen {
