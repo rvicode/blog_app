@@ -32,7 +32,8 @@ class Posts extends StatelessWidget {
 class PostItem extends StatelessWidget {
   final PostData post;
   final TextTheme textTheme;
-  const PostItem({super.key, 
+  const PostItem({
+    super.key,
     required this.post,
     required this.textTheme,
   });
@@ -41,9 +42,11 @@ class PostItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return const ArticleScreen();
-        },));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) {
+            return const ArticleScreen();
+          },
+        ));
       },
       child: Container(
         margin: const EdgeInsets.fromLTRB(32, 8, 32, 8),
