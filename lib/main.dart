@@ -5,10 +5,8 @@ import 'package:blog_app/screens/profile_screen/profile_screen.dart';
 import 'package:blog_app/screens/search_screen/search_screen.dart';
 import 'package:blog_app/widgets/bottom_navigation_widget.dart';
 import 'package:blog_app/widgets/theme_data.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -55,36 +53,88 @@ const double bottomNavigationHight = 65;
 
 class _MainScreenState extends State<MainScreen> {
   int selectScreenIndex = homeIndex;
+  final List<int> _history = [];
+
+  final GlobalKey<NavigatorState> _homeKey = GlobalKey();
+  final GlobalKey<NavigatorState> _articleKey = GlobalKey();
+  final GlobalKey<NavigatorState> _searchKey = GlobalKey();
+  final GlobalKey<NavigatorState> _profileKey = GlobalKey();
+
+  late final map = {
+    homeIndex: _homeKey,
+    articleIndex: _articleKey,
+    searchIndex: _searchKey,
+    profileIndex: _profileKey,
+  };
+
+  Future<bool> _onWillPop() async {
+    final NavigatorState currentSelectedTabNavigatorState =
+        map[selectScreenIndex]!.currentState!;
+    if (currentSelectedTabNavigatorState.canPop()) {
+      currentSelectedTabNavigatorState.pop();
+      return false;
+    } else if (_history.isNotEmpty) {
+      setState(() {
+      selectScreenIndex = _history.last;
+      _history.removeLast();
+      });
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            bottom: bottomNavigationHight,
-            right: 0,
-            left: 0,
-            child: IndexedStack(
-              index: selectScreenIndex,
-              children: [
-                MyHomePage(),
-                ArticleScreen(),
-                SearchScreen(),
-                ProfileScreen()
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            left: 0,
-            child: BottomNavigation(onTap: (int index) {
+    return SafeArea(
+      child: WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+          body: Stack(
+            children: [
+              Positioned.fill(
+                bottom: bottomNavigationHight,
+                right: 0,
+                left: 0,
+                child: IndexedStack(
+                  index: selectScreenIndex,
+                  children: [
+                    Navigator(
+                        key: _homeKey,
+                        onGenerateRoute: (settings) => MaterialPageRoute(
+                            builder: (context) => MyHomePage())),
+                    Navigator(
+                        key: _articleKey,
+                        onGenerateRoute: (settings) => MaterialPageRoute(
+                            builder: (context) => const ArticleScreen())),
+                    Navigator(
+                        key: _searchKey,
+                        onGenerateRoute: (settings) => MaterialPageRoute(
+                            builder: (context) => const SearchScreen())),
+                    Navigator(
+                        key: _profileKey,
+                        onGenerateRoute: (settings) => MaterialPageRoute(
+                            builder: (context) => const ProfileScreen())),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: BottomNavigation(
+                  onTap: (int index) {
                     setState(() {
-            selectScreenIndex = index;
+                      _history.remove(selectScreenIndex);
+                      _history.add(selectScreenIndex);
+                      selectScreenIndex = index;
                     });
-                  }, selectedIndex: selectScreenIndex,),
+                  },
+                  selectedIndex: selectScreenIndex,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
