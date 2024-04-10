@@ -1,8 +1,12 @@
 import 'package:blog_app/gen/assets.gen.dart';
+import 'package:blog_app/main.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation({super.key});
+  final Function(int index) onTap;
+  final int selectedIndex;
+  const BottomNavigation(
+      {super.key, required this.onTap, required this.selectedIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class BottomNavigation extends StatelessWidget {
                   borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(16),
                       topLeft: Radius.circular(16))),
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.only(top: 12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -35,24 +39,40 @@ class BottomNavigation extends StatelessWidget {
                       iconFileName: 'Home.png',
                       activeiconFileName: 'Home.png',
                       title: 'Home',
+                      onTap: () {
+                        onTap(homeIndex);
+                      },
+                      isActive: selectedIndex == homeIndex,
                     ),
                     BottomNavigationItem(
                       iconFileName: 'Articles.png',
                       activeiconFileName: 'Articles.png',
                       title: 'Articles',
+                      onTap: () {
+                        onTap(articleIndex);
+                      },
+                      isActive: selectedIndex == articleIndex,
                     ),
-                    SizedBox(
-                      width: 4,
+                    const SizedBox(
+                      width: 50,
                     ),
                     BottomNavigationItem(
                       iconFileName: 'Search.png',
                       activeiconFileName: 'Search.png',
                       title: 'Search',
+                      onTap: () {
+                        onTap(searchIndex);
+                      },
+                      isActive: selectedIndex == searchIndex,
                     ),
                     BottomNavigationItem(
                       iconFileName: 'Menu.png',
                       activeiconFileName: 'Menu.png',
                       title: 'Menu',
+                      onTap: () {
+                        onTap(profileIndex);
+                      },
+                      isActive: selectedIndex == profileIndex,
                     ),
                   ],
                 ),
@@ -80,22 +100,36 @@ class BottomNavigationItem extends StatelessWidget {
   final String iconFileName;
   final String activeiconFileName;
   final String title;
-  const BottomNavigationItem({super.key, 
+  final Function() onTap;
+  final bool isActive;
+  const BottomNavigationItem({
+    super.key,
     required this.iconFileName,
     required this.activeiconFileName,
     required this.title,
+    required this.onTap,
+    required this.isActive,
   });
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Column(
-      children: [
-        Image.asset(
-          'assets/img/icons/$iconFileName',
+    final themeData = Theme.of(context);
+    return Expanded(
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/img/icons/$iconFileName',
+              color: isActive?themeData.colorScheme.primary:Colors.grey,
+            ),
+            Text(title,
+                style: themeData.textTheme.bodySmall!.apply(
+                    color:
+                        isActive ? themeData.colorScheme.primary : Colors.grey))
+          ],
         ),
-        Text(title, style: textTheme.bodySmall!.apply(color: Colors.grey))
-      ],
+      ),
     );
   }
 }
