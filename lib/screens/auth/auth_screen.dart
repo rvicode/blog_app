@@ -1,4 +1,5 @@
 import 'package:blog_app/gen/assets.gen.dart';
+import 'package:blog_app/main.dart';
 import 'package:blog_app/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -164,9 +165,7 @@ class _Login extends StatelessWidget {
             ),
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MyHomePage()));
+                  MaterialPageRoute(builder: (context) => const MainScreen()));
             },
             child: Text(
               'LOGIN',
@@ -290,9 +289,7 @@ class _Signup extends StatelessWidget {
             ),
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MyHomePage()));
+                  MaterialPageRoute(builder: (context) => const MainScreen()));
             },
             child: Text(
               'Sign Up'.toUpperCase(),
