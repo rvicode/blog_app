@@ -75,8 +75,8 @@ class _MainScreenState extends State<MainScreen> {
       return false;
     } else if (_history.isNotEmpty) {
       setState(() {
-      selectScreenIndex = _history.last;
-      _history.removeLast();
+        selectScreenIndex = _history.last;
+        _history.removeLast();
       });
       return false;
     }
@@ -98,22 +98,12 @@ class _MainScreenState extends State<MainScreen> {
                 child: IndexedStack(
                   index: selectScreenIndex,
                   children: [
-                    Navigator(
-                        key: _homeKey,
-                        onGenerateRoute: (settings) => MaterialPageRoute(
-                            builder: (context) => MyHomePage())),
-                    Navigator(
-                        key: _articleKey,
-                        onGenerateRoute: (settings) => MaterialPageRoute(
-                            builder: (context) => const ArticleScreen())),
-                    Navigator(
-                        key: _searchKey,
-                        onGenerateRoute: (settings) => MaterialPageRoute(
-                            builder: (context) => const SearchScreen())),
-                    Navigator(
-                        key: _profileKey,
-                        onGenerateRoute: (settings) => MaterialPageRoute(
-                            builder: (context) => const ProfileScreen())),
+                    _navigator(_homeKey, homeIndex, MyHomePage()),
+                    _navigator(
+                        _articleKey, articleIndex, const ArticleScreen()),
+                    _navigator(_searchKey, searchIndex, const SearchScreen()),
+                    _navigator(
+                        _profileKey, profileIndex, const ProfileScreen()),
                   ],
                 ),
               ),
@@ -137,5 +127,13 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
     );
+  }
+
+  Widget _navigator(GlobalKey key, int index, Widget child) {
+    return key.currentState == null && selectScreenIndex != index?Container(): Navigator(
+        key: key,
+        onGenerateRoute: (settings) => MaterialPageRoute(
+            builder: (context) =>
+                Offstage(offstage: selectScreenIndex != index, child: child)));
   }
 }
