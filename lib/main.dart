@@ -3,6 +3,7 @@ import 'package:blog_app/screens/article_screen/article_screen.dart';
 import 'package:blog_app/screens/home_screen/home_screen.dart';
 import 'package:blog_app/screens/profile_screen/profile_screen.dart';
 import 'package:blog_app/screens/search_screen/search_screen.dart';
+import 'package:blog_app/screens/splash_screen/splash_screen.dart';
 import 'package:blog_app/widgets/bottom_navigation_widget.dart';
 import 'package:blog_app/widgets/theme_data.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
               secoundaryTextColor, primaryTextColor, defaultfontfamily),
           useMaterial3: true,
         ),
-        home: const MainScreen());
+        home: const SplashScreen());
   }
 }
 
