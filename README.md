@@ -1,3 +1,3 @@
 <h1>
-  A Blog UI Project
+  A UI Blog Project
 </h1>
